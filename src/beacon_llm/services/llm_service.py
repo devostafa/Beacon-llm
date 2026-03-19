@@ -7,7 +7,10 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
     DataCollatorForLanguageModeling, Trainer
 
 
-class FineTune:
+class LLMService:
+    def inference(self, model_name, prompt):
+        raise NotImplementedError("inference is not yet implemented")
+
     def fine_tune(model_name, data_dir_path) -> bool:
         # ───────────────────────────────────────────────
         #  Model setup
@@ -88,4 +91,7 @@ class FineTune:
 
         model.save_pretrained(train_args.output_dir)
 
-        return true
+        return True
+
+    def export_to_gguf(self):
+        raise NotImplementedError("export_to_gguf is not yet implemented")
