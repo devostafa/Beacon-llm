@@ -3,3 +3,5 @@
 dataset/
 out/
 config.json
+junk/
+beacon_llm.egg-info/

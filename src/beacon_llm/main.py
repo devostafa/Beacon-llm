@@ -1,18 +1,27 @@
 from pathlib import Path
 
-from services.config_service import ConfigService
-from services.llm_service import LLMService
+from huggingface_hub import login
+
+from beacon_llm.services.config_service import ConfigService
+from beacon_llm.services.llm_service import LLMService
 
 
 def main():
-    config = ConfigService.load_config()
+    config = ConfigService().load_config()
+
+    login(config["hf_token"])
+
     start_fine_tune(config)
 
 
 def start_fine_tune(config):
     print("Starting fine-tuning of base model")
 
-    check = LLMService.fine_tune(config["model"], str(Path(__file__).resolve().parent / "data" / "dataset"))
+    llm = LLMService()
+
+    data_dir_path = str(Path(__file__).resolve().parent / "data" / "dataset")
+
+    check = llm.fine_tune(config["model"], data_dir_path)
 
     if check:
         print("Fine-tuning done successfully")
